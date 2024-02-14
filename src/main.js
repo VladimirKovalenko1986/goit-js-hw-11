@@ -38,11 +38,13 @@ function onFormSearch(e) {
 
       spinnerHide();
 
+      informationTotalPrice(totalHits);
+
       refs.listForm.innerHTML = createMarkup(hits);
 
       gallery.refresh();
     })
-    .catch(ErrorSearch)
+    .catch(errorSearch)
     .finally(clearFormSearch);
 }
 
@@ -50,7 +52,7 @@ function clearFormSearch() {
   refs.formSearch.reset();
 }
 
-function ErrorSearch(err) {
+function errorSearch(err) {
   iziToast.error({
     position: 'topRight',
     title: 'Error',
@@ -61,11 +63,21 @@ function ErrorSearch(err) {
     'Sorry, there are no images matching your search query. Please try again!'
   );
 
-  spinnerShow();
+  spinnerHide();
 }
 
 function clearNewList() {
   refs.listForm.innerHTML = '';
+}
+
+function informationTotalPrice(elements) {
+  console.log(`Hooray! We found ${elements} images.`);
+
+  iziToast.success({
+    position: 'topRight',
+    title: 'OK',
+    message: `Hooray! We found ${elements} images.`,
+  });
 }
 
 // Status spinner
